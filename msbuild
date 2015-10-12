@@ -1,0 +1,2 @@
+#!/bin/sh
+mono /root/.dnx/packages/Microsoft.Build.Mono.Debug/14.1.0-prerelease/lib/MSBuild.exe $@

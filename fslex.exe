@@ -1,0 +1,2 @@
+#!/bin/sh
+mono /opt/visualfsharp/lkg/FSharp-4.0.30319.1/bin/FsLex.exe $@
