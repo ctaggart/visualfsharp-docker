@@ -40,7 +40,8 @@ script:
 
 after_success:
   - if [ ! -z "$TRAVIS_TAG" ]; then
-      docker tag docker.io/ctaggart/visualfsharp:latest docker.io/ctaggart/visualfsharp:$FSC_VERSION;
       docker login --email=$DOCKER_HUB_EMAIL --username=$DOCKER_HUB_USERNAME --password=$DOCKER_HUB_PASSWORD;
       docker push docker.io/ctaggart/visualfsharp:$FSC_VERSION;
+      docker tag docker.io/ctaggart/visualfsharp:$FSC_VERSION docker.io/ctaggart/visualfsharp:latest;
+      docker push docker.io/ctaggart/visualfsharp:latest;
     fi
