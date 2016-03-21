@@ -1,3 +1,4 @@
 *.nupkg
 *.tar.gz
 /dotnet/
+project.lock.json

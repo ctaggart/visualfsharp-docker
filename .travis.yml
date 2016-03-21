@@ -35,8 +35,8 @@ install:
 
 script:
   - docker build -t docker.io/ctaggart/visualfsharp:$FSC_VERSION .
-  # TODO run tests
-  #- docker run --rm docker.io/ctaggart/visualfsharp:$FSC_VERSION /bin/bash -c 'unit-tests; exit $?'
+  # run test by building the template
+  - docker run --rm -v $TRAVIS_BUILD_DIR/template:/root/template -w /root/template docker.io/ctaggart/visualfsharp:$FSC_VERSION /bin/bash -c './build.sh; exit $?'
 
 after_success:
   - if [ ! -z "$TRAVIS_TAG" ]; then
