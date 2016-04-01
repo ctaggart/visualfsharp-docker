@@ -12,29 +12,27 @@ language: rust
 
 env:
   global:
-    # version of Microsoft.FSharp.Compiler.netcore
-    # https://www.myget.org/gallery/fsharp-daily
-    - FSC_VERSION=1.0.0-alpha-160329
-    - FSCORE_VERSION=$FSC_VERSION
     # easy way to determine the latest dotnet for ubuntu
     # curl https://dotnetcli.blob.core.windows.net/dotnet/dev/Binaries/Latest/dotnet-ubuntu-x64.latest.tar.gz | tar xzf - ./.version -O
     - CLI_VERSION=1.0.1.001808
+
+    # https://www.myget.org/gallery/fsharp-daily
+    - FSHARP_VERSION=1.0.0-alpha-160329
+
+    # https://dotnet.myget.org/gallery/dotnet-buildtools
+    - MSBUILD_VERSION=0.1.0-preview-00022
+
     # travis encrypt DOCKER_HUB_EMAIL=a DOCKER_HUB_USERNAME=b DOCKER_HUB_PASSWORD=c
     - secure: "SBc8QcrGuSECRuwEoikP4dPM8Z2Gaddi7oANm2mbh/JmpdJuD8wn5ToFQc3ih4WI2IZRe7lnU7yxv2R/ZPVXlhIu+MZIcR0Bv9UJrHpGVJbeTTRMo13lBzSbIP93tcTc6IxRJin9s5mM2Hv8AJIsmX0Wx8I9zwRKwyrzNZffOz9ACsITxYW+OjM/vpURVMPdG75RkcWrhDuQOLqWneARLUiMqcFfg9ezxT2whfCI6ZRG81e/bLGutw2sqC9XTeVcszHq6l7rftUIEfjC/eheJwy6B0RNr3qH1srlUqxlMeoRcrPeUuAA01Oex4pXOHhToBngOQUHT+ydiDBwpqNuZrycqNOCLEQ0wng4JXQ0dtHqk8KXXn9ecf388u8Mf+k7DuyrW1K5QCnG9gpfTLcHYzuEkqy3cRQxHYMhMSAaMjHklMXmaNqAYESTet0y33vwLfPJxYntWAb784OABYpa6VTuJ4tmp0XrTkeFPHTBuo8byHoRDghepOeN/fsU5quSjM9sE/A3VJ9Rr2mU3Qk4znBHePsgzKqu8xQjyVGi9vMHCpnH0jcvb8bpEumPgGLBiKZNzLTgPUlKhS8eCJx3dnSQnS9kO+j8F0AVPebxl/CWvaB9rZ73FVSnjTLe/ryonCI9d/SnN9p7crp4vvpms7llIGOg9Hpibr+CzXdxg3k="
 
 before_install:
   # https://docs.travis-ci.com/user/installing-dependencies/
   - sudo apt-get -qq -y install curl unzip
-  - curl -L https://www.myget.org/F/fsharp-daily/api/v2/package/Microsoft.FSharp.Compiler.netcore/$FSC_VERSION -o Microsoft.FSharp.Compiler.netcore.$FSC_VERSION.nupkg
-  - curl -L https://www.myget.org/F/fsharp-daily/api/v2/package/Microsoft.FSharp.Core.netcore/$FSCORE_VERSION -o Microsoft.FSharp.Core.netcore.$FSCORE_VERSION.nupkg
-  - curl -O https://dotnetcli.blob.core.windows.net/dotnet/dev/Binaries/$CLI_VERSION/dotnet-ubuntu-x64.$CLI_VERSION.tar.gz
 
 install:
-  - mkdir dotnet
-  - tar xzvf dotnet-ubuntu-x64.$CLI_VERSION.tar.gz -C dotnet
-  - unzip -jo Microsoft.FSharp.Compiler.netcore.$FSC_VERSION.nupkg lib/DNXCore50/fsc.exe lib/DNXCore50/FSharp.Compiler.dll lib/DNXCore50/fsi.exe lib/DNXCore50/FSharp.Compiler.Interactive.Settings.dll -d dotnet/bin
-  - unzip -jo Microsoft.FSharp.Core.netcore.$FSCORE_VERSION.nupkg lib/DNXCore50/FSharp.Core.dll lib/DNXCore50/FSharp.Core.sigdata lib/DNXCore50/FSharp.Core.optdata -d dotnet/bin
-  - cp scripts/* dotnet/bin
+  - ./install-cli.sh
+  - ./install-fsharp.sh
+  - ./install-msbuild.sh
 
 script:
   - docker build -t docker.io/ctaggart/visualfsharp:$FSC_VERSION .
