@@ -12,7 +12,8 @@ RUN echo 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.6 main' | tee 
   && apt-get -qq update \
   && apt-get -q -y install cmake llvm-3.5 clang-3.5 lldb-3.6 lldb-3.6-dev libunwind8 libunwind8-dev gettext libicu-dev liblttng-ust-dev libcurl4-openssl-dev libssl-dev uuid-dev
 
-COPY dotnet /usr/share/dotnet
+COPY dotnet/bin /usr/share/dotnet/runtime/coreclr
+COPY Microsoft.Build.Targets /usr/share/dotnet/Microsoft.Build.Targets
 
 ENV PATH /usr/share/dotnet/bin:$PATH
 
