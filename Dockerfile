@@ -15,7 +15,7 @@ RUN echo 'deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.6 main' | tee 
 COPY dotnet/bin /usr/share/dotnet/runtime/coreclr
 COPY Microsoft.Build.Targets /usr/share/dotnet/Microsoft.Build.Targets
 
-ENV PATH /usr/share/dotnet/bin:$PATH
+ENV PATH /usr/share/dotnet/runtime/coreclr:$PATH
 
 # workaround bug with LTTng library & Docker < 1.11.0
 # https://github.com/dotnet/cli/issues/1582
