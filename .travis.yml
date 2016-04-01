@@ -30,9 +30,9 @@ before_install:
   - sudo apt-get -qq -y install curl unzip
 
 install:
-  - install-cli.sh
-  - install-fsharp.sh
-  - install-msbuild.sh
+  - ./install-cli.sh
+  - ./install-fsharp.sh
+  - ./install-msbuild.sh
 
 script:
   - docker build -t docker.io/ctaggart/visualfsharp:$FSC_VERSION .
