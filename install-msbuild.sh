@@ -13,5 +13,7 @@ unzip -jo Microsoft.Build.Framework.$MSBUILD_VERSION.nupkg lib/dotnet/Microsoft.
 unzip -jo Microsoft.Build.Tasks.Core.$MSBUILD_VERSION.nupkg lib/dotnet/Microsoft.Build.Tasks.Core.dll -d dotnet/bin
 unzip -jo Microsoft.Build.Utilities.Core.$MSBUILD_VERSION.nupkg lib/dotnet/Microsoft.Build.Utilities.Core.dll -d dotnet/bin
 
+cp scripts/msbuild dotnet/bin
+
 # put targets in another folder
 unzip -o Microsoft.Build.Targets.$MSBUILD_VERSION.nupkg -d Microsoft.Build.Targets
